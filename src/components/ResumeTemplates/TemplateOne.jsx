@@ -7,6 +7,9 @@ import {
   Github,
   User,
   Linkedin,
+  Calendar,
+  Globe,
+  Users,
 } from "lucide-react";
 import ContactInfo from "../ResumeSections/ContactInfo";
 import EducationInfo from "../ResumeSections/EducationInfo";
@@ -86,28 +89,34 @@ const TemplateOne = ({ resumeData, colorPalette, containerWidth }) => {
             <p className="text-sm text-center">
               {resumeData.profileInfo.designation}
             </p>
-            
-            <div className="mt-3 text-center">
-              {resumeData.profileInfo.gender && (
-                <p className="text-xs text-gray-600">
-                  Gender: {resumeData.profileInfo.gender}
-                </p>
-              )}
-              {resumeData.profileInfo.nationality && (
-                <p className="text-xs text-gray-600">
-                  Nationality: {resumeData.profileInfo.nationality}
-                </p>
-              )}
-              {resumeData.profileInfo.dateOfBirth && (
-                <p className="text-xs text-gray-600">
-                  DOB: {new Date(resumeData.profileInfo.dateOfBirth).toLocaleDateString()}
-                </p>
-              )}
-            </div>
           </div>
 
           <div className="my-6 mx-6">
             <div className="flex flex-col gap-4">
+              {resumeData.profileInfo.gender && (
+                <ContactInfo
+                  icon={<Users />}
+                  iconBG={themeColors[2]}
+                  value={resumeData.profileInfo.gender}
+                />
+              )}
+
+              {resumeData.profileInfo.nationality && (
+                <ContactInfo
+                  icon={<Globe />}
+                  iconBG={themeColors[2]}
+                  value={resumeData.profileInfo.nationality}
+                />
+              )}
+
+              {resumeData.profileInfo.dateOfBirth && (
+                <ContactInfo
+                  icon={<Calendar />}
+                  iconBG={themeColors[2]}
+                  value={new Date(resumeData.profileInfo.dateOfBirth).toLocaleDateString()}
+                />
+              )}
+
               <ContactInfo
                 icon={<MapPin />}
                 iconBG={themeColors[2]}

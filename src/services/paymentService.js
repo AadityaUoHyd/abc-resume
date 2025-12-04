@@ -48,7 +48,7 @@ class PaymentService {
   async initiatePayment(orderData, userInfo) {
     return new Promise((resolve, reject) => {
       const options = {
-        key: "add_your_razorpay_key", // Replace with your Razorpay key
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID || "add_your_razorpay_key", // Use environment variable
         amount: orderData.amount,
         currency: orderData.currency,
         name: "ABC Resume Pro",

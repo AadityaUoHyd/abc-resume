@@ -7,6 +7,9 @@ import {
   Github,
   User,
   Linkedin,
+  Calendar,
+  Globe,
+  Users,
 } from "lucide-react";
 import ContactInfo from "../ResumeSections/ContactInfo";
 import EducationInfo from "../ResumeSections/EducationInfo";
@@ -86,17 +89,29 @@ const TemplateThree = ({ resumeData, colorPalette, containerWidth }) => {
                   {resumeData.profileInfo.designation}
                 </p>
 
-                <div className="text-xs text-gray-600 mb-2">
-                  {resumeData.profileInfo.gender && (
-                    <p>Gender: {resumeData.profileInfo.gender}</p>
-                  )}
-                  {resumeData.profileInfo.nationality && (
-                    <p>Nationality: {resumeData.profileInfo.nationality}</p>
-                  )}
-                  {resumeData.profileInfo.dateOfBirth && (
-                    <p>DOB: {new Date(resumeData.profileInfo.dateOfBirth).toLocaleDateString()}</p>
-                  )}
-                </div>
+                {resumeData.profileInfo.gender && (
+                  <ContactInfo
+                    icon={<Users />}
+                    iconBG={themeColors[2]}
+                    value={resumeData.profileInfo.gender}
+                  />
+                )}
+
+                {resumeData.profileInfo.nationality && (
+                  <ContactInfo
+                    icon={<Globe />}
+                    iconBG={themeColors[2]}
+                    value={resumeData.profileInfo.nationality}
+                  />
+                )}
+
+                {resumeData.profileInfo.dateOfBirth && (
+                  <ContactInfo
+                    icon={<Calendar />}
+                    iconBG={themeColors[2]}
+                    value={new Date(resumeData.profileInfo.dateOfBirth).toLocaleDateString()}
+                  />
+                )}
 
                 <ContactInfo
                   icon={<MapPin />}
