@@ -97,7 +97,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 🤝 Contributing
 Contributions are welcome! Please read our Contributing Guidelines for details.
 
-📧 Contact
-For any queries, please contact your-email@example.com
-
 ✨ Happy 'ABC Resume' Building! ✨
