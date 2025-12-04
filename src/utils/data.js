@@ -79,6 +79,9 @@ export const DUMMY_RESUME_DATA = {
     designation: "Full Stack Software Engineer",
     summary:
       "Innovative and detail-oriented software engineer with 2+ years of experience delivering high-performance web applications using cutting-edge technologies such as Java, Spring Boot, SQL/NoSQL Databases, Microservices, React, Python, MERN, Next.Js, DevOps and AWS.",
+    gender: "MALE",
+    nationality: "India",
+    dateOfBirth: "1995-06-15",
   },
   contactInfo: {
     email: "aadi@gmail.com",
@@ -112,18 +115,24 @@ export const DUMMY_RESUME_DATA = {
       institution: "University of Hyderabad",
       startDate: "2011-07",
       endDate: "2014-06",
+      percentage: "8.5",
+      division: "First Class",
     },
     {
       degree: "Bachelors in Computer Science",
       institution: "Ranchi University",
       startDate: "2008-08",
       endDate: "2011-06",
+      percentage: "7.8",
+      division: "First Class",
     },
     {
       degree: "Intermediate in Science",
       institution: "BSK College",
-      startDate: "2010-06",
-      endDate: "2008-05",
+      startDate: "2008-06",
+      endDate: "2010-05",
+      percentage: "75",
+      division: "First Division",
     },
   ],
   skills: [

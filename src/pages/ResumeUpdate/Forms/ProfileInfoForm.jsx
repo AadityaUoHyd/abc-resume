@@ -36,6 +36,42 @@ const ProfileInfoForm = ({profileData, updateSection}) => {
             type="text"
           />
 
+          <Input
+            value={profileData.gender || ""}
+            onChange={({ target }) =>
+              updateSection("gender", target.value)
+            }
+            label="Gender"
+            placeholder="Select Gender"
+            type="select"
+            options={[
+              { value: "", label: "Select Gender" },
+              { value: "MALE", label: "Male" },
+              { value: "FEMALE", label: "Female" },
+              { value: "OTHERS", label: "Others" }
+            ]}
+          />
+
+          <Input
+            value={profileData.nationality || ""}
+            onChange={({ target }) =>
+              updateSection("nationality", target.value)
+            }
+            label="Nationality"
+            placeholder="Your Nationality"
+            type="text"
+          />
+
+          <Input
+            value={profileData.dateOfBirth || ""}
+            onChange={({ target }) =>
+              updateSection("dateOfBirth", target.value)
+            }
+            label="Date of Birth"
+            placeholder="YYYY-MM-DD"
+            type="date"
+          />
+
           <div className="col-span-2 mt-3">
             <label className="text-xs font-medium text-slate-600">
               Summary

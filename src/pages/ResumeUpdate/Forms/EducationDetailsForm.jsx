@@ -55,6 +55,26 @@ const EducationDetailsForm = ({
                   updateArrayItem(index, "endDate", target.value)
                 }
               />
+
+              <Input
+                label="Percentage/CGPA"
+                placeholder="8.5 or 75%"
+                type="text"
+                value={education.percentage || ""}
+                onChange={({ target }) =>
+                  updateArrayItem(index, "percentage", target.value)
+                }
+              />
+
+              <Input
+                label="Division"
+                placeholder="First Class/First Division"
+                type="text"
+                value={education.division || ""}
+                onChange={({ target }) =>
+                  updateArrayItem(index, "division", target.value)
+                }
+              />
             </div>
 
             {educationInfo.length > 1 && (
@@ -78,6 +98,8 @@ const EducationDetailsForm = ({
               institution: "",
               startDate: "",
               endDate: "",
+              percentage: "",
+              division: "",
             })
           }
         >

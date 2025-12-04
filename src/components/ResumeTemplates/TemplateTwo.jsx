@@ -87,6 +87,18 @@ const TemplateTwo = ({ resumeData, colorPalette, containerWidth }) => {
                     {resumeData.profileInfo.designation}
                   </p>
 
+                  <div className="text-xs text-gray-600 mb-2">
+                    {resumeData.profileInfo.gender && (
+                      <p>Gender: {resumeData.profileInfo.gender}</p>
+                    )}
+                    {resumeData.profileInfo.nationality && (
+                      <p>Nationality: {resumeData.profileInfo.nationality}</p>
+                    )}
+                    {resumeData.profileInfo.dateOfBirth && (
+                      <p>DOB: {new Date(resumeData.profileInfo.dateOfBirth).toLocaleDateString()}</p>
+                    )}
+                  </div>
+
                   <ContactInfo
                     icon={<MapPin />}
                     iconBG={themeColors[2]}
@@ -182,6 +194,8 @@ const TemplateTwo = ({ resumeData, colorPalette, containerWidth }) => {
                 duration={`${formatYearMonth(
                   data.startDate
                 )} - ${formatYearMonth(data.endDate)}`}
+                percentage={data.percentage}
+                division={data.division}
               />
             ))}
           </div>

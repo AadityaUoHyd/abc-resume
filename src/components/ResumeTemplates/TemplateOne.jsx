@@ -86,6 +86,24 @@ const TemplateOne = ({ resumeData, colorPalette, containerWidth }) => {
             <p className="text-sm text-center">
               {resumeData.profileInfo.designation}
             </p>
+            
+            <div className="mt-3 text-center">
+              {resumeData.profileInfo.gender && (
+                <p className="text-xs text-gray-600">
+                  Gender: {resumeData.profileInfo.gender}
+                </p>
+              )}
+              {resumeData.profileInfo.nationality && (
+                <p className="text-xs text-gray-600">
+                  Nationality: {resumeData.profileInfo.nationality}
+                </p>
+              )}
+              {resumeData.profileInfo.dateOfBirth && (
+                <p className="text-xs text-gray-600">
+                  DOB: {new Date(resumeData.profileInfo.dateOfBirth).toLocaleDateString()}
+                </p>
+              )}
+            </div>
           </div>
 
           <div className="my-6 mx-6">
@@ -142,6 +160,8 @@ const TemplateOne = ({ resumeData, colorPalette, containerWidth }) => {
                   duration={`${formatYearMonth(
                     data.startDate
                   )} - ${formatYearMonth(data.endDate)}`}
+                  percentage={data.percentage}
+                  division={data.division}
                 />
               ))}
             </div>
