@@ -74,8 +74,7 @@ export const themeColorPalette = {
 
 export const DUMMY_RESUME_DATA = {
   profileInfo: {
-    profileImg: null,
-    previewUrl: "",
+    profilePreviewUrl: "https://avatars.githubusercontent.com/u/57300089",
     fullName: "Aaditya Raj",
     designation: "Full Stack Software Engineer",
     summary:
@@ -134,9 +133,6 @@ export const DUMMY_RESUME_DATA = {
     { name: "Spring Boot", progress: 80 },
     { name: "AWS", progress: 75 },
     { name: "MERN", progress: 70 },
-    { name: "Python", progress: 65 },
-    { name: "Problem Solving", progress: 70 },
-    { name: "Microservices", progress: 75 },
   ],
   projects: [
     {
@@ -152,13 +148,6 @@ export const DUMMY_RESUME_DATA = {
         "A full-stack online food ordering web application, 'The-PlateNet' is build in Java & React. This repository contain frontend code.",
       github: "https://github.com/AadityaUoHyd/the-platenet",
       liveDemo: "https://the-platenet.vercel.app/",
-    },
-    {
-      title: "ABC Quizzy",
-      description:
-        "Online AI based quiz app. User can play 10 question per day, get confetti celebration when scores 75% or more. It has User's history as well for reference of question.",
-      github: "https://github.com/AadityaUoHyd/abc-quizzy",
-      liveDemo: "https://abc-quizzy.vercel.app/",
     },
   ],
   certifications: [
