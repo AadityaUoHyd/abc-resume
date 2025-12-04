@@ -51,10 +51,11 @@ const TemplateTwo = ({ resumeData, colorPalette, containerWidth }) => {
   return (
     <div
       ref={resumeRef}
-      className="p-6 bg-white h-full"
+      className="p-6 bg-white"
       style={{
         width: '210mm',
-        height: '297mm',
+        minHeight: '297mm',
+        height: 'auto',
         boxSizing: 'border-box'
       }}
     >
@@ -79,17 +80,18 @@ const TemplateTwo = ({ resumeData, colorPalette, containerWidth }) => {
             )}
           </div>
 
+          <div>
+            <div className="grid grid-cols-12 gap-2 items-center">
+              <div className="col-span-12">
+                <h2 className="text-2xl font-bold">
+                  {resumeData.profileInfo.fullName}
+                </h2>
+                <p className="text-[15px] font-semibold mb-3">
+                  {resumeData.profileInfo.designation}
+                </p>
 
-            <div>
-              <div className="grid grid-cols-12 gap-2 items-center">
-                <div className="col-span-6">
-                  <h2 className="text-2xl font-bold">
-                    {resumeData.profileInfo.fullName}
-                  </h2>
-                  <p className="text-[15px] font-semibold mb-2">
-                    {resumeData.profileInfo.designation}
-                  </p>
-
+                {/* All Contact Info in Consistent Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {resumeData.profileInfo.gender && (
                     <ContactInfo
                       icon={<Users />}
@@ -115,14 +117,6 @@ const TemplateTwo = ({ resumeData, colorPalette, containerWidth }) => {
                   )}
 
                   <ContactInfo
-                    icon={<MapPin />}
-                    iconBG={themeColors[2]}
-                    value={resumeData.contactInfo.location}
-                  />
-                </div>
-
-                <div className="col-span-6 flex flex-col gap-5 mt-2">
-                  <ContactInfo
                     icon={<Mail />}
                     iconBG={themeColors[2]}
                     value={resumeData.contactInfo.email}
@@ -133,9 +127,13 @@ const TemplateTwo = ({ resumeData, colorPalette, containerWidth }) => {
                     iconBG={themeColors[2]}
                     value={resumeData.contactInfo.phone}
                   />
-                </div>
 
-                <div className="col-span-6">
+                  <ContactInfo
+                    icon={<MapPin />}
+                    iconBG={themeColors[2]}
+                    value={resumeData.contactInfo.location}
+                  />
+
                   {resumeData.contactInfo.linkedin && (
                     <ContactInfo
                       icon={<Linkedin />}
@@ -143,9 +141,15 @@ const TemplateTwo = ({ resumeData, colorPalette, containerWidth }) => {
                       value={resumeData.contactInfo.linkedin}
                     />
                   )}
-                </div>
 
-                <div className="col-span-6">
+                  {resumeData.contactInfo.github && (
+                    <ContactInfo
+                      icon={<Github />}
+                      iconBG={themeColors[2]}
+                      value={resumeData.contactInfo.github}
+                    />
+                  )}
+
                   <ContactInfo
                     icon={<Rss />}
                     iconBG={themeColors[2]}
@@ -154,6 +158,7 @@ const TemplateTwo = ({ resumeData, colorPalette, containerWidth }) => {
                 </div>
               </div>
             </div>
+          </div>
         </div>
       </div>
 

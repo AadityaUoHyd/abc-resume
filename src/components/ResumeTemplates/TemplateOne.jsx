@@ -51,10 +51,11 @@ const TemplateOne = ({ resumeData, colorPalette, containerWidth }) => {
   return (
     <div
       ref={resumeRef}
-      className="p-6 bg-white h-full"
+      className="p-6 bg-white"
       style={{
         width: '210mm',
-        height: '297mm',
+        minHeight: '297mm',
+        height: 'auto',
         boxSizing: 'border-box'
       }}
     >

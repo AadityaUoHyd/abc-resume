@@ -19,6 +19,8 @@ export const generatePDFFromElement = async (element, filename = 'resume.pdf', o
   // A4 dimensions in pixels at 96 DPI (standard screen resolution)
   const A4_WIDTH_PX = 794;   // 210mm
   const A4_HEIGHT_PX = 1123; // 297mm
+  const A4_WIDTH_MM = 210;   // mm
+  const A4_HEIGHT_MM = 297;  // mm
 
   let clone = null;
   try {
@@ -28,44 +30,77 @@ export const generatePDFFromElement = async (element, filename = 'resume.pdf', o
     clone.style.left = '-10000px';
     clone.style.top = '0';
     clone.style.background = '#ffffff';
-    // Force A4 dimensions instead of using element dimensions
+    // Remove fixed height to allow natural content height
     clone.style.width = `${A4_WIDTH_PX}px`;
-    clone.style.height = `${A4_HEIGHT_PX}px`;
-    clone.style.overflow = 'hidden';
+    clone.style.height = 'auto';
+    clone.style.overflow = 'visible';
 
     document.body.appendChild(clone);
 
     // Tailwind v4 uses oklch colors that html2canvas can't parse; normalize to rgb
     fixTailwindColors(clone);
 
-    // Render to canvas using A4 dimensions
-    const canvas = await html2canvas(clone, {
-      scale,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: '#ffffff',
-      width: A4_WIDTH_PX,
-      height: A4_HEIGHT_PX,
-      scrollX: 0,
-      scrollY: 0,
-    });
+    // Get the natural height of the content
+    const contentHeight = clone.scrollHeight;
+    const totalPages = Math.ceil(contentHeight / A4_HEIGHT_PX);
 
-    // Convert to JPEG (much smaller than PNG)
-    const dataUrl = canvas.toDataURL('image/jpeg', quality);
-
-    // A4 dimensions in mm for jsPDF
-    const a4WidthMm = 210;
-    const a4HeightMm = 297;
-
-    // Create PDF with exact A4 dimensions - no scaling needed since canvas is already A4 sized
+    // Create PDF
     const pdf = new jsPDF('p', 'mm', 'a4');
-    
-    // Add image to fit exactly on A4 page (no scaling, perfect fit)
-    pdf.addImage(dataUrl, 'JPEG', 0, 0, a4WidthMm, a4HeightMm);
+
+    // Generate each page
+    for (let pageNum = 0; pageNum < totalPages; pageNum++) {
+      const yOffset = pageNum * A4_HEIGHT_PX;
+      
+      // Create a temporary element for this page
+      const pageElement = document.createElement('div');
+      pageElement.style.position = 'fixed';
+      pageElement.style.left = '-10000px';
+      pageElement.style.top = '0';
+      pageElement.style.width = `${A4_WIDTH_PX}px`;
+      pageElement.style.height = `${A4_HEIGHT_PX}px`;
+      pageElement.style.backgroundColor = '#ffffff';
+      pageElement.style.overflow = 'hidden';
+      
+      // Clone the content and position it for this page
+      const contentClone = clone.cloneNode(true);
+      contentClone.style.position = 'absolute';
+      contentClone.style.top = `-${yOffset}px`;
+      contentClone.style.left = '0';
+      contentClone.style.width = `${A4_WIDTH_PX}px`;
+      contentClone.style.height = `${contentHeight}px`;
+      
+      pageElement.appendChild(contentClone);
+      document.body.appendChild(pageElement);
+
+      // Render this page to canvas
+      const canvas = await html2canvas(pageElement, {
+        scale,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        width: A4_WIDTH_PX,
+        height: A4_HEIGHT_PX,
+        scrollX: 0,
+        scrollY: 0,
+      });
+
+      // Convert to JPEG
+      const dataUrl = canvas.toDataURL('image/jpeg', quality);
+
+      // Add page to PDF (add new page after first page)
+      if (pageNum > 0) {
+        pdf.addPage();
+      }
+      
+      // Add image to fit exactly on A4 page
+      pdf.addImage(dataUrl, 'JPEG', 0, 0, A4_WIDTH_MM, A4_HEIGHT_MM);
+
+      // Clean up temporary page element
+      document.body.removeChild(pageElement);
+    }
 
     return pdf;
   } catch (error) {
-    console.error('Error generating PDF:', error);
     throw new Error('Failed to generate PDF');
   } finally {
     if (clone && clone.parentNode) {

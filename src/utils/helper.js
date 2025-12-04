@@ -95,9 +95,24 @@ export async function captureElementAsImage(element) {
   const A4_WIDTH_PX = 794;   // 210mm
   const A4_HEIGHT_PX = 1123; // 297mm
 
-  const canvas = await html2canvas(element, {
+  // Clone the element to get its natural height
+  const clone = element.cloneNode(true);
+  clone.style.position = 'fixed';
+  clone.style.left = '-10000px';
+  clone.style.top = '0';
+  clone.style.width = `${A4_WIDTH_PX}px`;
+  clone.style.height = 'auto';
+  clone.style.overflow = 'visible';
+  
+  document.body.appendChild(clone);
+  
+  // Get the actual content height
+  const contentHeight = clone.scrollHeight;
+  
+  // For thumbnail, we capture the first page only
+  const canvas = await html2canvas(clone, {
     width: A4_WIDTH_PX,
-    height: A4_HEIGHT_PX,
+    height: Math.min(contentHeight, A4_HEIGHT_PX),
     scale: 1, // Don't scale, we're setting exact dimensions
     useCORS: true,
     allowTaint: true,
@@ -105,6 +120,9 @@ export async function captureElementAsImage(element) {
     windowWidth: A4_WIDTH_PX,
     windowHeight: A4_HEIGHT_PX
   });
+  
+  // Clean up
+  document.body.removeChild(clone);
   
   return canvas.toDataURL("image/png");
 }

@@ -501,7 +501,7 @@ const EditResume = () => {
         });
       }
     } catch (error) {
-      console.error("Error fetching resume:", error);
+      toast.error("Failed to fetch resume");
     }
   };
 
@@ -512,7 +512,7 @@ const EditResume = () => {
       const blob = await response.blob();
       return new File([blob], fileName, { type: blob.type });
     } catch (error) {
-      console.error('Error converting blob URL to file:', error);
+      toast.error("Failed to convert image");
       return null;
     }
   };
@@ -556,53 +556,20 @@ const EditResume = () => {
 
       const { thumbnailLink, profilePreviewUrl } = uploadResponse.data;
 
-      // Call the second API to update other resume data
-      await updateResumeDetails(thumbnailLink, profilePreviewUrl);
+      // Update local state with new image URLs
+      setResumeData(prev => ({
+        ...prev,
+        thumbnailLink: thumbnailLink || prev.thumbnailLink,
+        profileInfo: {
+          ...prev.profileInfo,
+          profilePreviewUrl: profilePreviewUrl || prev.profileInfo.profilePreviewUrl,
+        }
+      }));
 
-      toast.success("Resume Updated Successfully!");
+      toast.success("Resume Images Updated Successfully!");
       navigate("/dashboard");
     } catch (error) {
-      console.error("Error uploading images:", error);
       toast.error("Failed to upload images");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const updateResumeDetails = async (thumbnailLink, profilePreviewUrl) => {
-    try {
-      setIsLoading(true);
-
-      const updatePayload = {
-        ...resumeData,
-        thumbnailLink: thumbnailLink || "",
-        profileInfo: {
-          ...resumeData.profileInfo,
-          profilePreviewUrl: profilePreviewUrl || "",
-        },
-        // Ensure all array fields are properly formatted
-        workExperience: Array.isArray(resumeData.workExperience) ? resumeData.workExperience : [],
-        education: Array.isArray(resumeData.education) ? resumeData.education : [],
-        skills: Array.isArray(resumeData.skills) ? resumeData.skills : [],
-        projects: Array.isArray(resumeData.projects) ? resumeData.projects : [],
-        certifications: Array.isArray(resumeData.certifications) ? resumeData.certifications : [],
-        languages: Array.isArray(resumeData.languages) ? resumeData.languages : [],
-        interests: Array.isArray(resumeData.interests) ? resumeData.interests : [],
-      };
-
-      // Remove File objects that cannot be serialized to JSON
-      if (updatePayload.profileInfo.profileImg) {
-        delete updatePayload.profileInfo.profileImg;
-      }
-
-      console.log("Sending update payload with images:", updatePayload);
-
-      const response = await axiosInstance.put(
-        API_PATHS.RESUME.UPDATE(resumeId),
-        updatePayload
-      );
-    } catch (err) {
-      console.error("Error capturing image:", err);
     } finally {
       setIsLoading(false);
     }
@@ -613,7 +580,6 @@ const EditResume = () => {
     try {
       setIsLoading(true);
 
-      console.log("Original resumeData:", resumeData);
 
       const updatePayload = {
         ...resumeData,
@@ -632,7 +598,6 @@ const EditResume = () => {
         delete updatePayload.profileInfo.profileImg;
       }
 
-      console.log("Final update payload:", JSON.stringify(updatePayload, null, 2));
 
       const response = await axiosInstance.put(
         API_PATHS.RESUME.UPDATE(resumeId),
@@ -642,7 +607,6 @@ const EditResume = () => {
       toast.success("Resume Updated Successfully!");
       navigate("/dashboard");
     } catch (err) {
-      console.error("Error saving resume:", err);
       toast.error("Failed to save resume");
     } finally {
       setIsLoading(false);
@@ -657,7 +621,7 @@ const EditResume = () => {
       toast.success('Resume Deleted Successfully')
       navigate('/dashboard')
     } catch (err) {
-      console.error("Error capturing image:", err);
+      toast.error("Failed to capture image");
     } finally {
       setIsLoading(false);
     }
@@ -793,11 +757,10 @@ const EditResume = () => {
             className="bg-white shadow-lg mx-auto"
             style={{
               width: '210mm', // A4 width
-              height: '297mm', // A4 height
-              maxHeight: '297mm',
               maxWidth: '210mm',
-              aspectRatio: '210/297', // A4 portrait aspect ratio
-              overflow: 'hidden'
+              minHeight: '297mm', // Minimum A4 height
+              height: 'auto', // Allow natural height for multi-page
+              overflow: 'visible' // Show all content for preview
             }}
           >
             {/* Resume Template */}

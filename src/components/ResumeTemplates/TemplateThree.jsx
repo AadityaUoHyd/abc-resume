@@ -51,44 +51,47 @@ const TemplateThree = ({ resumeData, colorPalette, containerWidth }) => {
   return (
     <div
       ref={resumeRef}
-      className="p-6 bg-white h-full"
+      className="p-6 bg-white"
       style={{
         width: '210mm',
-        height: '297mm',
+        minHeight: '297mm',
+        height: 'auto',
         boxSizing: 'border-box'
       }}
     >
 
       <div className="flex items-start gap-5 px-2 mb-5">
-          <div
-            className="w-[100px] h-[100px] max-w-[105px] max-h-[105px] rounded-2xl flex items-center justify-center"
-            style={{ backgroundColor: themeColors[1] }}
-          >
-            {resumeData.profileInfo.profilePreviewUrl ? (
-              <img
-                src={resumeData.profileInfo.profilePreviewUrl}
-                className="w-[90px] h-[90px] rounded-2xl"
-              />
-            ) : (
-              <div
-                className="w-[90px] h-[90px] flex items-center justify-center text-5xl rounded-full"
-                style={{ color: themeColors[4] }}
-              >
-                <User />
-              </div>
-            )}
-          </div>
+        <div
+          className="w-[100px] h-[100px] max-w-[105px] max-h-[105px] rounded-2xl flex items-center justify-center"
+          style={{ backgroundColor: themeColors[1] }}
+        >
+          {resumeData.profileInfo.profilePreviewUrl ? (
+            <img
+              src={resumeData.profileInfo.profilePreviewUrl}
+              className="w-[90px] h-[90px] rounded-2xl"
+            />
+          ) : (
+            <div
+              className="w-[90px] h-[90px] flex items-center justify-center text-5xl rounded-full"
+              style={{ color: themeColors[4] }}
+            >
+              <User />
+            </div>
+          )}
+        </div>
 
-          <div>
-            <div className="grid grid-cols-12 items-center">
-              <div className="col-span-8">
-                <h2 className="text-2xl font-bold">
-                  {resumeData.profileInfo.fullName}
-                </h2>
-                <p className="text-[15px] font-semibold mb-2">
-                  {resumeData.profileInfo.designation}
-                </p>
+        <div>
+          <div className="grid grid-cols-12 items-center">
+            <div className="col-span-12">
+              <h2 className="text-2xl font-bold">
+                {resumeData.profileInfo.fullName}
+              </h2>
+              <p className="text-[15px] font-semibold mb-3">
+                {resumeData.profileInfo.designation}
+              </p>
 
+              {/* All Contact Info in Consistent Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {resumeData.profileInfo.gender && (
                   <ContactInfo
                     icon={<Users />}
@@ -114,14 +117,6 @@ const TemplateThree = ({ resumeData, colorPalette, containerWidth }) => {
                 )}
 
                 <ContactInfo
-                  icon={<MapPin />}
-                  iconBG={themeColors[2]}
-                  value={resumeData.contactInfo.location}
-                />
-              </div>
-
-              <div className="col-span-4 flex flex-col gap-5 mt-2">
-                <ContactInfo
                   icon={<Mail />}
                   iconBG={themeColors[2]}
                   value={resumeData.contactInfo.email}
@@ -132,10 +127,17 @@ const TemplateThree = ({ resumeData, colorPalette, containerWidth }) => {
                   iconBG={themeColors[2]}
                   value={resumeData.contactInfo.phone}
                 />
+
+                <ContactInfo
+                  icon={<MapPin />}
+                  iconBG={themeColors[2]}
+                  value={resumeData.contactInfo.location}
+                />
               </div>
             </div>
           </div>
         </div>
+      </div>
 
       <div className="grid grid-cols-12 gap-8">
         <div

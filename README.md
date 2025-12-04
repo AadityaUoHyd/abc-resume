@@ -1,6 +1,6 @@
 # abc-resume
 
-A modern, responsive resume builder application that helps you create professional A4 portrait resumes with ease. Built with React, Spring Boot, and MongoDB. This is frontend repository.
+A modern, responsive resume builder application that helps you create professional A4 portrait resumes with ease. Built with React, Spring Boot, Razorpay payment, and MongoDB. This is frontend repository.
 
 ## 🚀 Features
 
@@ -10,6 +10,7 @@ A modern, responsive resume builder application that helps you create profession
 - **Download as PDF** - Export your resume as a high-quality PDF
 - **Cloud Storage** - Save and manage multiple resume versions
 - **Responsive Design** - Works on desktop and mobile devices
+- **Razorpay Payment** - Pay to get premium other two template. TemplateOne is default basic templete and free.
 
 ## 📱 Demo
 
@@ -23,6 +24,7 @@ A modern, responsive resume builder application that helps you create profession
 - **Storage**: Cloudinary (for image storage)
 - **Authentication**: JWT
 - **PDF Generation**: jsPDF, html2canvas
+- **Razorpay**: Integration of Razorpay payment gateway
 
 ## 📦 Prerequisites
 
@@ -77,6 +79,7 @@ Run the Spring Boot application:
 - Print-ready PDF generation
 - Download your resume in PDF format and can also mail directly to your email-id.
 - Consistent rendering across devices
+- Razorpay payment gateway there, pay to get premium other two template. TemplateOne is default basic templete and free.
 
 ### Resume Templates
 - Multiple professional designs
